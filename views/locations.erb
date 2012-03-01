@@ -1,0 +1,44 @@
+<!doctype html>
+<html>
+<head>
+  <title>Locations</title>
+  <style type="text/css">
+  @import url('/css/bootstrap.min.css');
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <div class="page-header">
+      <h1><%= @locations.size %> Locations</h1>
+      <a class="btn" style="float: right;" href="/locations.csv">CSV</a>
+    </div>
+
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Station Name</th>
+          <th>Force</th>
+          <th>Postcode</th>
+          <th>Lat</th>
+          <th>Lon</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @locations.each do |location| %>
+          <tr <%= "class=\"incomplete_record\"" unless location.has_coordinates? %>>
+            <td style="width: 40%;"><%= location.name %></td>
+            <td style="width: 20%;"><%= location.force_id %></td>
+            <td style="width: 20%;"><%= location.postcode || '<span class="label label-important">None</span>' %></td>
+            <td style="width: 10%;"><%= location.coordinates[1] rescue '<span class="label label-important">None</span>' %></td>
+            <td style="width: 10%;"><%= location.coordinates[0] rescue '<span class="label label-important">None</span>' %></td>
+            <td></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+  </div>
+</body>
+</html>
